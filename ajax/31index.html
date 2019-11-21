@@ -1,0 +1,53 @@
+<!DOCTYPE.HTML>
+<html>
+    <head>
+        <title>Ajax</title>
+    </head>
+    <body>
+      <button id=populate>Populate data</button>
+       <table>
+           <thead>
+               <tr>
+                   <td>id</td>
+                   <td>name</td>
+                   <td>Username</td>
+                   <td>EmailId</td>
+                   <td>Phone no</td>
+               </tr>
+           </thead>
+           <tbody id="result_area">
+               <td>1</td>
+               <td>name</td>
+           </tbody>
+       </table>
+       
+        <script>
+            var xhr=new XMLHttpRequest();
+            xhr.open("get","https://jsonplaceholder.typicode.com/users");
+            document.getElementById("populate").addEventListener("click",function(){
+            xhr.send();
+            
+            })
+            xhr.onreadystatechange = function(){
+                if(xhr.readyState==4)
+                    {
+                        if(xhr.status==200){
+                           // alert("welcome")
+                           // alert(xhr.responseText)
+                            var result_data=JSON.parse(xhr.responseText);
+                            var html_content="";
+                            for(i=0;i<result_data.length;++i){
+                                var current_record=result_data[i];
+                                html_content=html_content+"<tr> <td>"+current_record.id+"</td> <td>"+current_record.name+"</td> <td>"+current_record.username+"</td> <td>"+current_record.email+"</td><td>"+current_record.phone+"</td> </tr>";
+                            }
+                            document.getElementById("result_area").innerHTML=html_content;
+                            
+                        }
+                        else{
+                            alert("error")
+                        }
+                    }
+            }
+        </script>
+    </body>
+</html>
